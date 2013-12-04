@@ -4,7 +4,7 @@
   <title><![CDATA[FoolHorse]]></title>
   <link href="http://foolhorse.github.io/atom.xml" rel="self"/>
   <link href="http://foolhorse.github.io/"/>
-  <updated>2013-12-03T00:06:22+08:00</updated>
+  <updated>2013-12-04T16:41:20+08:00</updated>
   <id>http://foolhorse.github.io/</id>
   <author>
     <name><![CDATA[MaChao]]></name>
@@ -18,7 +18,10 @@
     <link href="http://foolhorse.github.io/blog/2013/12/02/hellooo/"/>
     <updated>2013-12-02T21:56:02+08:00</updated>
     <id>http://foolhorse.github.io/blog/2013/12/02/hellooo</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>Hello world
+中文题目无法使用
+中文标点无法使用
+汉字可用</p>
 ]]></content>
   </entry>
   
