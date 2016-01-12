@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://foolhorse.github.io/sitemap.xml 
