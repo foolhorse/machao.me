@@ -18,6 +18,20 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
+测试中文
+测试java代码
+{% highlight java%}
+class BlogPost{
+  private int id ;
+  String title;
+  int views;
+  public String getTitle(){
+    return title;
+  }
+  public static final float PI = 3.14 ;
+}
+{% endhighlight %}
+
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
 [jekyll-docs]: http://jekyllrb.com/docs/home
