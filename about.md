@@ -4,12 +4,9 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+记录琐碎或者不琐碎的事，跳过或者没跳过的坑，肿胀或不肿胀的字。
+我认真或者不认真的写写，你随便或者不随便的看看。
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
-
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+你也可以在这里找到我:
+{% include icon-twitter.html username="machaotuite" %} /
+[CharlieMa](https://twitter.com/machaotuite)
