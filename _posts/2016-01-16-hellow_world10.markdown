@@ -1,7 +1,6 @@
 ---
-title: 32423423
-date:   2016-01-12 23:54:12 +0800
 layout: post
+date:   2016-01-22 23:54:12 +0800
 categories: test
 ---
  

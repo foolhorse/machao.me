@@ -8,14 +8,15 @@
 # Site settings
 title: 笨马
 email: not show
-description: > # this means to ignore newlines until "baseurl:"
-  程序员
+description: > # this means to ignore newlines until "baseurl:" 
+  当当当
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: machaotuite
 github_username:  foolhorse
-
+gems: [jekyll-paginate]
+paginate: 5
 # Build settings
 markdown: kramdown
 
