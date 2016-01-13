@@ -4,8 +4,10 @@ layout: default
 
 <div class="home">
 
+{% for category in site.categories %}
+   <p>{{category[0]}}</p>
+  {% endfor %}
   <h1 class="page-heading">Posts</h1>
-  <p>{{paginator.total_pages}}</p>
   <ul class="post-list">
     {% for post in site.posts %}
       <li>
