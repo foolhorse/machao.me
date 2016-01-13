@@ -18,3 +18,8 @@ github_username:  foolhorse
 
 # Build settings
 markdown: kramdown
+
+# Global Configuration
+# Build Command Options
+# Serve Command Options
+
