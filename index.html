@@ -3,10 +3,11 @@ layout: default
 ---
 
 <div class="home">
-
+ 
 {% for category in site.categories %}
-   <p>{{category[0]}}</p>
+   <p class="mdl-badge" data-badge="4">{{category[0]}}</p>
   {% endfor %}
+ 
   <h1 class="page-heading">Posts</h1>
   <ul class="post-list">
     {% for post in site.posts %}
