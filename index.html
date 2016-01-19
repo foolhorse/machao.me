@@ -4,13 +4,24 @@ layout: default
 
 <div class="home">
  
-{% for category in site.categories %}
-   <p class="mdl-badge" data-badge="4">{{category[0]}}</p>
-  {% endfor %}
- 
+  <h1 class="page-heading">Categories</h1>
+  <ul >
+    {% for category in site.categories %}
+    <li><a >{{category[0]}}</a></li>
+    {% endfor %}
+  </ul>
+
+  <h1 class="page-heading">Tags</h1>
+  <ul>
+    {% for tag in site.tags %}
+    <li><a >{{tag[0]}}</a></li>
+    {% endfor %}
+  </ul>
+  
+
   <h1 class="page-heading">Posts</h1>
   <ul class="post-list">
-    {% for post in site.posts %}
+      {% for post in site.posts %}
       <li>
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
