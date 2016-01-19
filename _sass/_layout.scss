@@ -45,8 +45,8 @@
         position: absolute;
         top: 9px;
         right: $spacing-unit / 2;
-        background-color: $background-color;
-        border: 1px solid $grey-color-light;
+        background-color: $brand-color;
+        border: 1px solid $grey-color-dark;
         border-radius:0px;
         text-align: right;
 
@@ -64,7 +64,7 @@
                 height: 15px;
 
                 path {
-                    fill: $grey-color-dark;
+                    fill: $grey-color-light;
                 }
             }
         }
