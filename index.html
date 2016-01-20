@@ -7,7 +7,7 @@ layout: default
   <h1 class="page-heading">Categories</h1>
   <ul >
     {% for category in site.categories %}
-    <li><a >{{category[0]}}</a></li>
+    <li><a href="/categories/{\{ category | first }\}/">{{category[0]}}</a></li>
     {% endfor %}
   </ul>
 
