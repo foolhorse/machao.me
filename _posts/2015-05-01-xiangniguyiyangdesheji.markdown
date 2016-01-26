@@ -2,7 +2,7 @@
 title: 像尼姑一样的设计
 date:   2015-05-01 0:0:0 +0800
 layout: post
-tags: 设计
+tags: design
 ---
  
 ###像尼姑一样的设计
