@@ -8,7 +8,7 @@ published: true
 
 ## 简介
 
-这个小玩意可以显示不同调的不同音阶在吉他指板上的位置，key和scale都可以修改，吉他每根弦的调音也可以分别修改。
+这个小玩意可以显示不同调的不同音阶在吉他指板上的位置，key 和 scale 都可以修改，吉他每根弦的调音也可以分别修改。在线使用：[Guitar Finger Board](http://www.foolhorse.com/GuitarFingerBoard/) 
 
 ## 目标
 
