@@ -46,11 +46,13 @@ View.OnFocusChangeListener - onFocusChange()  当用户使用导航键或轨迹�
 ### 焦点的移动
 
 系统会设置一套默认线路
+
 如果需要自定义，可以通过重写以下 XML 属性： nextFocusDown、 nextFocusLeft、 nextFocusRight和 nextFocusUp。
 
 ### 焦点的获得和失去
 
 在非触摸模式下，焦点的移动是靠方向键或者轨迹球之类进行控制
+
 在触摸模式下，被点击的view如果isFocusableInTouchMode()为true的话，并且此view此时并没获得焦点，则获得焦点，不执行onClick事件，如果此时已经获得焦点，则执行onClick事件。如果isFocusableInTouchMode()为false的话，焦点不变，直接执行onClick事件。
 
 ### 监听变化
@@ -60,6 +62,8 @@ ViewTreeObserver.OnGlobalFocusChangeListener
 ## 一些有用的参考
 
 https://developer.android.com/guide/topics/ui/ui-events.html#TouchMode
+
 http://android-developers.blogspot.jp/2008/12/touch-mode.html
+
 http://www.101apps.co.za/index.php/articles/what-you-should-know-about-android-touch-mode-and-focus.html
  
