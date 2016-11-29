@@ -20,7 +20,7 @@ Picasso.with() 调用 Builder 创建这个单例，初始化 Downloader / Cache 
 
 ## Request.java
 
-请求封装类，对图形的操作都会记录在这里，供之后图形的创建使用，如重新计算大小，旋转角度，也可以自定义变换，只需要实现Transformation
+请求封装类，对图片的操作都会记录在这里，供之后图片的创建使用，如重新计算大小，旋转角度，也可以自定义变换，只需要实现Transformation
 
 ## Action.java
 
