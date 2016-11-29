@@ -52,3 +52,10 @@ Picasso.with() 调用 Builder 创建这个单例，初始化 Downloader / Cache 
 
 本地文件缓存，Picasso 并没有，需要 Downloader 的子类自己实现，如果使用 OkHttpDownloader 或者 UrlConnectionDownloader 的话，已经实现了文件缓存。
 
+
+    Hello World
+        println();
+    
+    
+    
+
