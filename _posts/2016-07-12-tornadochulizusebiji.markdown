@@ -10,7 +10,11 @@ published: true
 
 @tornado.web.asynchronous 
 
-当 RequestHandler 里有异步的代码时，加上 @asynchronous 能自动在该结束的时候调用 self.finish()。如果不加这个 decorator 则不会像一般的没有异步逻辑的 RequestHandler 那样自动 self.finish()。
+标记这个 RequestHandler 里有异步的代码，比如 RequestHandler 使用了回调式的http请求：
+```python
+http.fetch("http://www.foolhorse.com/", callback=self.on_response)
+```
+加时上 @asynchronous 需要在该请求结束的时候手动调用 self.finish()。如果不加这个 decorator 则不会像一般的没有异步逻辑的 RequestHandler 那样自动 self.finish()。
 
 @tornado.gen.coroutine
 
