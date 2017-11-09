@@ -198,6 +198,7 @@ public interface UserDao {
 
 如果 @Insert 方法只有一个参数，它可以返回一个 long，代表新插入元素的 rowId，如果参数是一个数组或者集合，那么应该返回 long[] 或者 List<long>。
 
+```Java
 @Dao
 public interface MyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -209,28 +210,33 @@ public interface MyDao {
     @Insert
     public void insertUsersAndFriends(User user, List<User> friends);
 }
+```
 
 #### Update
 
 Update 是一个更新一系列 entity 的简便方法。它根据参数的主键作为更新的依据。
 可以让这个方法返回一个 int 类型的值，表示更新影响的行数。
 
+```Java
 @Dao
 public interface MyDao {
     @Update
     public void updateUsers(User... users);
 }
+```
 
 #### Delete
 
 删除一系列 entity。它使用参数的主键找到要删除的 entity。
 可以让这个方法返回一个int类型的值，表示从数据库中被删除的行数。
 
+```Java
 @Dao
 public interface MyDao {
     @Delete
     public void deleteUsers(User... users);
 }
+```
 
 #### @Query 
 
@@ -262,12 +268,13 @@ public interface MyDao {
 
 - 传入参数集合
 
+```Java
 @Dao
 public interface MyDao {
     @Query("SELECT first_name, last_name FROM user WHERE region IN (:regions)")
     public List<NameTuple> loadUsersFromRegions(List<String> regions);
 }
-
+```
 
 - 返回字段的子集
 
