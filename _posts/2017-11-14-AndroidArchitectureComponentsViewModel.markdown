@@ -9,7 +9,7 @@ published: true
 
 用于持有和管理数据，通常持有 LiveData，处理数据持久化，存取等具体逻辑， 相当于 MVP 中的 Presenter。
 
-ViewModel与特定的Activity或Fragment实例无关。ViewModel 可以在 Activity 配置更改中保留其状态。它保存的数据立即可用于下一个 Activity 实例，而不需要在 onSaveInstanceState() 中保存数据，并手动还原。
+ViewModel 与特定的 Activity 或 Fragment 实例无关。ViewModel 可以在 Activity 配置更改中保留其状态。它保存的数据立即可用于下一个 Activity 实例，而不需要在 onSaveInstanceState() 中保存数据，并手动还原。
 
 ```Java
 public class MyViewModel extends ViewModel {

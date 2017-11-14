@@ -13,7 +13,7 @@ LiveData 是一个可监听的数据容器，可以在数据变化的时候通�
 
 如果 LifeCycle 不在 Started 或者 RESUMED 这两个状态，那么观察者将无法接受到数据更新的回调，即使数据发生了变化。
 
-如果 LifeCycle 销毁了，即生命周期结束，观察者将被自动从 LiveData中移除。
+如果 LifeCycle 销毁了，即生命周期结束，观察者将被自动从 LiveData 中移除。
 
 使用 setValue 改变值。
 
@@ -188,13 +188,11 @@ class MyViewModel extends ViewModel {
 }
 ```
 
-注意，这里我们将postalCode访问限制符写成public final，因为它将始终不变，UI只要在需要用的时候将观察者注册到postalCode中就行。这是当用户调用setInput后，如果 postalCode 上有可活动的观察者，那么 repository.getPostCode(address) 就会被调用，如果此时没有可活动的观察者，则repository.getPostCode(address) 不会被调用。
+注意，这里我们将 postalCode 写成 public final，因为它将始终不变，UI 只要在需要用的时候将观察者注册到 postalCode 中就行。这是当用户调用 setInput 后，如果 postalCode 上有可活动的观察者，那么 repository.getPostCode(address) 就会被调用，如果此时没有可活动的观察者，则 repository.getPostCode(address) 不会被调用。
 
 - 自定义转换 MediatorLiveData
 
-在你的应用中可能需要除了上面两种以外更多的LiveData的转换，为了实现这些转换，你可以使用MediatorLiveData类，它可以用来正确的处理其他多个LiveData的事件变化，并处理这些事件。MediatorLiveData会将自身的active/inactive状态变化正确的传递给它所处理的LiveData，例如MediatorLiveData没有观察者的话，
- 
-
+在你的应用中可能需要除了上面两种以外更多的 LiveData 的转换，为了实现这些转换，你可以使用MediatorLiveData类，它可以用来正确的处理其他多个 LiveData 的事件变化，并处理这些事件。MediatorLiveData 会将自身的 active / inactive 状态变化正确的传递给它所处理的 LiveData 。
 
 
 

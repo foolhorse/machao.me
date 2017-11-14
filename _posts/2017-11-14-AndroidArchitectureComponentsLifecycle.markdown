@@ -20,22 +20,32 @@ LifecycleObserver：观测 LifecycleOwner ，并在其生命周期变化时，�
 由 framework 和 Lifecycle 类发出的生命周期事件。这些事件对应 Activity / Fragment 中的回调事件。
 
 > Lifecycle.Event.ON_ANY：An Event constant that can be used to match all events
+
 > Lifecycle.Event.ON_CREATE：Constant for onCreate event of the LifecycleOwner
+
 > Lifecycle.Event.ON_DESTROY：Constant for onDestroy event of the LifecycleOwner
+
 > Lifecycle.Event.ON_PAUSE：Constant for onPause event of the LifecycleOwner
+
 > Lifecycle.Event.ON_RESUME：Constant for onResume event of the LifecycleOwner
+
 > Lifecycle.Event.ON_START：Constant for onStart event of the LifecycleOwner
+
 > Lifecycle.Event.ON_STOP：Constant for onStop event of the LifecycleOwner
 
 ## State
 
 Lifecycle 对象获取到的组件当前的状态。
 
-> Lifecycle.State.CREATED：Created state for a LifecycleOwner. 
-> Lifecycle.State.DESTROYED：Destroyed state for a LifecycleOwner. 
-> Lifecycle.State.INITIALIZED：Initialized state for a LifecycleOwner. 
-> Lifecycle.State.RESUMED：Resumed state for a LifecycleOwner. 
-> Lifecycle.State.STARTED：Started state for a LifecycleOwner. 
+> Lifecycle.State.CREATED：Created state for a LifecycleOwner
+
+> Lifecycle.State.DESTROYED：Destroyed state for a LifecycleOwner
+
+> Lifecycle.State.INITIALIZED：Initialized state for a LifecycleOwner
+
+> Lifecycle.State.RESUMED：Resumed state for a LifecycleOwner
+
+> Lifecycle.State.STARTED：Started state for a LifecycleOwner
 
 ## LifecycleOwner 
 
