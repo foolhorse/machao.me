@@ -9,6 +9,7 @@ published: true
 
 在 Android 8.0 (API level 26) 中可以在 xml 中就像其他资源一样使用自定义字体。
 使用 Support Library 26 可以兼容到 API version 14 以上。
+建议将 Android Sutdio 升级到 3.0 以上，保证使用的 Support Library 是最新版本。不然可能碰到 IDE 跟你较劲的情况。。。
 
 ## 定义
 
