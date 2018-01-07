@@ -30,4 +30,5 @@ http.fetch("http://www.foolhorse.com/", callback=self.on_response)
 另外需要注意的是函数所在的类需要定义 executor 和 io_loop（ io_loop默认在 RequestHandler 中已经定义了 ）。
 
 
- 
+参考：https://hackernoon.com/asynchronous-python-45df84b82434
+
