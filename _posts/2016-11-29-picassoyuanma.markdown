@@ -10,21 +10,28 @@ published: true
 
 ## Picasso.java
 
+
 单例，几乎是所有操作步骤的中转站，中南海。
 
 Picasso.with() 调用 Builder 创建这个单例，初始化 Downloader / Cache （默认LruCache）/ ExecutorService(默认PicassoExecutorService) / RequestTransformer（默认不做任何处理）/ Stats / Dispatcher 。创建清理线程 CleanupThread 并启动，清理通过 ReferenceQueue 实现，referenceQueue 里存的是 Action 里面不同类型 Target 的 WeakReference。
 
 ## RequestCreator.java
 
-类似个 Builder 模式，除了 Builder 模式固有的设置参数的方法，还有 get() / fetch() / into() 几个方法，这几个作用类似都是 调用 createRequest() 创建 Request ，再创建一个Action 开始获取图片， get() 直接调用 BitmapHunter 的 forRequest() 创建 BitmapHunter，然后调用这个bitmapHunter 的 hunt() 同步返回 bitmap。fetch() 调用 picasso 实例的 submit() 把 action 扔进 dispatcher 。 into() 调用 picasso 实例的 enqueueAndSubmit() ：把这个 action 放进 picasso.targetToAction，再调用 submit() 把 action 扔进 dispatcher 。fetch() 和 into() 会通过 picasso.quickMemoryCacheCheck(key) 尝试从缓存读取
+类似个 Builder 模式，除了 Builder 模式固有的设置参数的方法，
+还有 get() / fetch() / into() 几个方法，这几个作用类似都是 调用 createRequest() 创建 Request ，再创建一个Action 开始获取图片， 
+get() 直接调用 BitmapHunter 的 forRequest() 创建 BitmapHunter，然后调用这个bitmapHunter 的 hunt() 同步返回 bitmap。
+fetch() 调用 picasso 实例的 submit() 把 action 扔进 dispatcher 。
+into() 调用 picasso 实例的 enqueueAndSubmit() ：把这个 action 放进 picasso.targetToAction，再调用 submit() 把 action 扔进 dispatcher 。
+fetch() 和 into() 会通过 picasso.quickMemoryCacheCheck(key) 尝试从缓存读取
 
 ## Request.java
 
-请求封装类，对图片的操作都会记录在这里，供之后图片的创建使用，如重新计算大小，旋转角度，也可以自定义变换，只需要实现Transformation
+请求封装类，对图形的操作都会记录在这里，供之后图形的创建使用，如重新计算大小，旋转角度，也可以自定义变换，只需要实现Transformation
 
-## Action.java
+## Action / ImageViewAction / Target
 
-代表了一个具体的加载任务，主要用于图片加载后的结果回调，有两个抽象方法: complete() 和 error() 来通知上层。
+都可以看作图片下载的任务单元 / 回调接口。代表了一个具体的加载任务，主要用于图片加载后的结果回调，有两个抽象方法: complete() 和 error() 来通知上层。
+其中会使用弱引用 RequestWeakReference来包装 ImageView 或者 Target 。所以要注意使用 Target 时，不要用匿名内部类，存一个 Activity 的 filed，或者让 Activity Implement Target。
 
 ## BitmapHunter.java
 
@@ -51,6 +58,4 @@ Picasso.with() 调用 Builder 创建这个单例，初始化 Downloader / Cache 
 内存缓存，子类 LruCache 采用 Least Recently Used 算法，使用 LinkedHashMap 作为数据结构，LinkedHashMap 自带 LRU 策略，只需根据配置的缓存大小调用 trimToSize。配合 Stats 计数 实现缓存大小的管理
 
 本地文件缓存，Picasso 并没有，需要 Downloader 的子类自己实现，如果使用 OkHttpDownloader 或者 UrlConnectionDownloader 的话，已经实现了文件缓存。
-
-
 
