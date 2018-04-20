@@ -31,7 +31,7 @@ fetch() 和 into() 会通过 picasso.quickMemoryCacheCheck(key) 尝试从缓存�
 ## Action / ImageViewAction / Target
 
 都可以看作图片下载的任务单元 / 回调接口。代表了一个具体的加载任务，主要用于图片加载后的结果回调，有两个抽象方法: complete() 和 error() 来通知上层。
-其中会使用弱引用 RequestWeakReference来包装 ImageView 或者 Target 。所以要注意使用 Target 时，不要用匿名内部类，存一个 Activity 的 filed，或者让 Activity Implement Target。
+其中会使用弱引用 RequestWeakReference来包装 ImageView 或者 Target 。所以要注意使用 Target 时，不要用匿名内部类，存一个 Activity / Fragment 的 filed，或者让 Activity / Fragement 去 Implement Target。
 
 ## BitmapHunter.java
 
