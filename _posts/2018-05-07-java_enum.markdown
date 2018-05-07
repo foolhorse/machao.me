@@ -1,0 +1,104 @@
+---
+layout: post
+title: "Java 中的 Enum 枚举"
+date: 2018-05-07 23:40:00 +0800
+tags: develop java
+published: true
+---
+# Java 中的 Enum 枚举
+
+一个典型的使用：
+```
+enum Day {
+    MONDAY, TUESDAY, WEDNESDAY,
+    THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+```
+使用关键字 enum 创建 枚举（Day） 在编译后 本质上 也是一个类，该类继承自`java.lang.Enum`
+
+每一个枚举项（MONDAY, TUESDAY...），都会 new 一个 Day 类型的实例。
+
+## 方法
+
+`ordinal()` 方法，该方法获取的是枚举变量在枚举类中声明的顺序。从 0 开始。
+
+`compareTo(E o)`  Enum实现了Comparable接口。比较枚举的大小，内部实现是根据每个枚举的`ordinal`值大小进行比较的。
+
+`name()` 与`toString()`几乎是等同的，都是输出变量的字符串形式。
+
+`valueOf(Class<T> enumType, String name)` 方法则是根据枚举类的 Class 对象和枚举名称获取枚举常量，注意该方法是静态的
+
+`valueOf(String name)` 方法最终还是会调用 Enum 类的 `valueOf(Class<T> enumType, String name)`
+
+`values()` 方法的作用就是获取枚举类中的所有变量，并作为数组返回
+
+`values()`方法和`valueOf(String name)`方法是编译器生成的 static 方法，注意这里有两个 `valueOf` 方法
+
+## 几个特性
+
+enum 可以实现接口
+
+两个枚举常量可以用 `==`比较
+
+可用于控制 `switch` 语句
+
+
+## 添加方法与自定义构造函数
+
+```
+public enum Day {
+    MONDAY("星期一"),
+    TUESDAY("星期二"),
+    WEDNESDAY("星期三"),
+    THURSDAY("星期四"),
+    FRIDAY("星期五"),
+    SATURDAY("星期六"),
+    SUNDAY("星期日");  // 注意这里这个分号
+
+    private String desc; 
+
+    private Day2(String desc){
+        this.desc=desc;
+    }
+
+    public String getDesc(){
+        return desc;
+    }
+
+    public static void main(String[] args){
+        for (Day2 day:Day2.values()) {
+            System.out.println("name:"+day.name()+ ",desc:"+day.getDesc());
+        }
+    }
+}
+```
+
+## 抽象方法
+
+enum 类的实例可以有类似多态的特性，但是也只是实例，不能作为方法的参数的类型。
+
+```
+public enum Direction {
+    LEFT{
+        @Override
+        public String getInfo() {
+            return "LEFT";
+        }
+    },
+    RIGHT{
+        @Override
+        public String getInfo() {
+            return "RIGHT";
+        }
+    }
+    ;
+
+    public abstract String getInfo();
+
+    public static void main(String[] args){
+        System.out.println("1:"+Direction.LEFT.getInfo());
+        System.out.println("2:"+Direction.RIGHT.getInfo());
+    }
+}
+```
+
