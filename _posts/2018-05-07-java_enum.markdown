@@ -16,7 +16,9 @@ enum Day {
 ```
 使用关键字 enum 创建 枚举（Day） 在编译后 本质上 也是一个类，该类继承自`java.lang.Enum`
 
-每一个枚举项（MONDAY, TUESDAY...），都会 new 一个 Day 类型的实例。
+每一个枚举项（MONDAY, TUESDAY...），都会 new 一个 Day 类型的实例。并且是 public static final 的。
+
+所以 Enum 类型所使用的内存，肯定是比一个静态 int 常量多，所以在 Android 开发中建议直接使用 `@XXXDef` 注解
 
 ## 方法
 
@@ -101,9 +103,5 @@ public enum Direction {
     }
 }
 ```
-
-## Android 中使用
-
-建议直接使用 Android 带的 @XXXDef 注解
 
 
