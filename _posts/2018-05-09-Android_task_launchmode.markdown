@@ -59,21 +59,20 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 
 - singleTask
 
-会先在系统中查找有相同 taskAffinity 的 Task 是否存在。如果有，它就会在这个 Task 中启动。
+如果没有相同 taskAffinity 的 Task ，就创建这个 taskAffinity 的新的 Task ，并创建 Activity 实例，加入这个新栈的栈顶。
 
-如果相同 taskAffinity 的 Task 中已经存在相应的 Activity 实例，会把位于这个 Activity 实例上面的 Activity 全部结束掉，让这个 Activity 实例位于栈顶。并调用 onNewIntent ，而 onCreate 和 onStart 不会被调用。有`FLAG_ACTIVITY_CLEAR_TOP`的效果。
+如果有相同 taskAffinity 的 Task ，没有 Activity 实例，则新建实例，加入这个栈的栈顶。
 
-如果相同 taskAffinity 的 Task 中没有 Activity 实例，则新建实例，加入这个栈的栈顶。
-
-如果没有相同 taskAffinity 的 Task ，就创建带有 taskAffinity 属性的新的 Task ，并创建 Activity 实例，加入这个新栈。
+如果有相同 taskAffinity 的 Task ，并且其中已经存在相应的 Activity 实例，会把位于这个 Activity 实例上面的 Activity 全部结束掉，让这个 Activity 实例位于栈顶。并调用 onNewIntent ，而 onCreate 和 onStart 不会被调用。有`FLAG_ACTIVITY_CLEAR_TOP`的效果。
 
 - singleInstance
 
 这个 Activity 在整个系统中只会存在于一个它专有的 Task ，这个 Task 里只有这一个 Activity 实例。只要存在这个栈，就存在 Activity 实例，反之亦然。
+它的意义是只存在一个实例，单独放在一个 Task 栈里给别的 Task 栈**共享**
 
 启动这个 Activity 时，如果系统不存在这个 Task ，则创建一个栈，并创建这个 Activity 实例加入栈中。
 
-如果存在这个 Task ，则直接跳转到这个栈中，调用栈里这个 Activity 实例的 onNewIntent 。 （只创建一个实例，单独放在一个 task 堆栈里给别的 task 栈**共享**）
+如果存在这个 Task ，则直接跳转到这个栈中，调用栈里这个 Activity 实例的 onNewIntent 。 
 
 被这个 singleInstance 的 Activity 启动的任何 Activity 都会运行在其他 Task 中，被启动的 Activity 在启动时，行为与 singleTask 模式一样。
 
@@ -85,11 +84,12 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 
 应用场景：
 短信应用里，短信详情 Activity 中，用户点击了一个网页地址超链接，就会启动浏览器应用的 网页浏览 Activity 。此时的 Task  T1 是 短信详情 Activity - 网页浏览 Activity 。
-如果这个网页浏览 Activity  的 allowTaskReparenting 设置为 true。在用户回到屏幕然后启动了 浏览器应用时，会将 T1 中的 网页浏览 Activity 转移到当前新的 Task 中 并打开。
+如果这个网页浏览 Activity  的 allowTaskReparenting 设置为 true。在用户回到主屏幕然后再次启动 浏览器应用时，会将 T1 中的 网页浏览 Activity 转移到当前新的 Task 中 并打开。
 
 ## alwaysRetainTaskState
 
 默认情况下，如果一个应用在后台呆的太久，系统就会对该应用的 Task 进行清理，除了根 Activity，其他 Activity 都会被清理出栈，但是如果在根 Activity 中设置了 alwaysRetainTaskState 为 true 之后，就不会清理。用户再次打开时，仍然可以看到上一次操作的界面。 
+这个根 Activity 的 launchMode 如果是 singleTask 或者 singleInstance 会导致无效。
 
 应用场景：
 浏览器打开了很多标签页，每次打开浏览器都保存了这些标签页的打开状态。 
@@ -107,7 +107,7 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 
 - `FLAG_ACTIVITY_NEW_TASK`
 
-与 launchMode 是 singleTask 时，行为相同。
+与 launchMode 是 singleTask 时，行为类似。
 
 - `FLAG_ACTIVITY_SINGLE_TOP`
 
@@ -129,5 +129,4 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 <https://developer.android.com/guide/components/tasks-and-back-stack>
 
 <https://blog.csdn.net/luoshengyang/article/details/6714543>
-
 
