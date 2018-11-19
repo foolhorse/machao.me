@@ -440,6 +440,8 @@ if else 的 OO 版本，可以在 runtime 动态的安排功能。
 
 责任链模式与装饰者模式在结构上很相似，但是区别在于业务角色的功能不同，装饰者的所有装饰者角色都负责一个功能，责任链中只有一个特别的类负责处理功能。
 
+OkHttp 中 chain 的调用，也是一种责任链模式
+
 ```
 abstract class PurchasePower {
     protected static final double BASE = 500;
@@ -769,8 +771,6 @@ public class Client {
 ## 参考
 
 <https://en.wikipedia.org/wiki/Design_Patterns>
-
-
 
 
 
