@@ -5,7 +5,7 @@ date: 2018-04-26 12:07:00 +0800
 tags: develop android lib
 published: true
 ---
-# Android 库的打包和发布
+# 「已发布」Android 库的打包和发布
 
 一个库项目的构建过程与一般项目是一样的。
 
@@ -86,6 +86,15 @@ BINTRAY_API_KEY=your_api_key
 BINTRAY_GPG_PASSPHRASE=
 ```
 当然，这些属性也可以不用 `gradle.properties` 的形式，因为`gradle.properties` 不能很好的支持变量的类型。也可以在  `build.gradle`  中添加 `ext {}` 直接写 groovy 代码的变量.
+
+## 上传
+
+`./gradlew install`，生成 libs docs poms，生成成功后，可以在项目的build目录下看见。
+
+`./gradlew bintrayUpload` 上传到 bintray 的 jfrog 上。
+
+进入 jfrog bintray 的这个项目的页面，点击 `add to jcenter` 申请添加到 jcenger 库中。
+
 
 
 
