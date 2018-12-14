@@ -17,6 +17,10 @@ published: true
 
 ## Task stack
 
+<https://github.com/aosp-mirror/platform_frameworks_base/blob/master/services/core/java/com/android/server/am/ActivityStack.java>
+
+参考：Android ActivityStack 那片文章
+
 在 Activity 中可以用 `getTaskId()` 获取当前 Activity 所在的 task 的 ID 
 
 Task 就是用户为了完成某个功能而执行的一系列 Activity 序列。栈结构，栈顶的 Activity 就是屏幕正在展示的 Activity
@@ -59,11 +63,13 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 
 - singleTask
 
+此 Acticity 的实例只有一个，只能存在于指定的 Task 中。
+
 如果没有相同 taskAffinity 的 Task ，就创建这个 taskAffinity 的新的 Task ，并创建 Activity 实例，加入这个新栈的栈顶。
 
 如果有相同 taskAffinity 的 Task ，没有 Activity 实例，则新建实例，加入这个栈的栈顶。
 
-如果有相同 taskAffinity 的 Task ，并且其中已经存在相应的 Activity 实例，会把位于这个 Activity 实例上面的 Activity 全部结束掉，让这个 Activity 实例位于栈顶。并调用 onNewIntent ，而 onCreate 和 onStart 不会被调用。有`FLAG_ACTIVITY_CLEAR_TOP`的效果。
+如果有相同 taskAffinity 的 Task ，并且其中已经存在相应的 Activity 实例，会把位于这个 Activity 实例上面的 Activity 全部结束掉，让这个 Activity 实例位于栈顶。并调用 onNewIntent ，而 onCreate  不会被调用。有`FLAG_ACTIVITY_CLEAR_TOP`的效果。
 
 - singleInstance
 
@@ -75,6 +81,10 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 如果存在这个 Task ，则直接跳转到这个栈中，调用栈里这个 Activity 实例的 onNewIntent 。 
 
 被这个 singleInstance 的 Activity 启动的任何 Activity 都会运行在其他 Task 中，被启动的 Activity 在启动时，行为与 singleTask 模式一样。
+
+onActivityResult 将会失去作用，它的 resultCode 会直接返回 `Activity.RESULT_CANCELED`。
+
+
 
 ## allowTaskReparenting
 
@@ -96,11 +106,11 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 
 ## clearTaskOnLaunch
 
-当应用进入后台后，然后用户再次打开时。如果根 Activity 的 clearTaskOnLaunch 为 false，则按照默认规则执行。如果根 Activity 的 clearTaskOnLaunch 为 true，则 Task 中除了根 Activity 之外所有的 Activity 都会被清理出栈。（被清理出栈的 Activity 中如果有 allowTaskReparenting 设置了 true 的，会被转移到 taskAffinity 相同的 Task 中）
+当应用进入后台后，然后用户再次打开时。如果根 Activity 的 clearTaskOnLaunch 为 true，则 Task 中除了根 Activity 之外所有的 Activity 都会被清理出栈。（被清理出栈的 Activity 中如果有 allowTaskReparenting 设置了 true 的，会被转移到 taskAffinity 相同的 Task 中）
 
 ## finishOnTaskLaunch
 
-当应用进入后台后，然后用户再次打开时。如果 Task 中某个 Activity 的 finishOnTaskLaunch 为 true，则把这个 Activity 从 Task 中清理出栈。
+** 理论上 ** 当应用进入后台后，然后用户再次打开时。如果 Task 中某个 Activity 的 finishOnTaskLaunch 为 true，则把这个 Activity 从 Task 中清理出栈。
 
 
 ## 相关的 Intent FLAG
@@ -115,9 +125,7 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 
 - `FLAG_ACTIVITY_CLEAR_TOP`
 
-如果指定 Activity 的 launchMode 属性没有值。如果要启动的 Activity 已在当前任务中运行，则会销毁 Task 里此 Activity 上方的所有 Activity，并通过 `onNewIntent()` 将此 Intent 传递给 Activity 已恢复的实例（现在位于顶部）。
-
-如果指定 Activity 的 launchMode 为 standard ，则该 Activity 也会从堆栈中移除，并在其位置启动一个新实例，以便处理传入的 Intent。
+如果指定 Activity 的 launchMode 为默认，也就是没有设置，则是 standard ，则会销毁 Task 里此 Activity 实例上方包括自身的所有 Activity 实例，并在其位置启动一个新实例，以便处理传入的 Intent。
 
 `FLAG_ACTIVITY_CLEAR_TOP` 通常与 `FLAG_ACTIVITY_NEW_TASK` 结合使用，这样可以找到其他任务中的现有 Activity，并将其放入可从中响应 Intent 的位置。
 
@@ -129,4 +137,3 @@ Activity 的 taskAffinity 可以设置成一个空字符串，表明这个 Activ
 <https://developer.android.com/guide/components/tasks-and-back-stack>
 
 <https://blog.csdn.net/luoshengyang/article/details/6714543>
-
