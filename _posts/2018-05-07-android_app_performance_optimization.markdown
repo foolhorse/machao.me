@@ -9,6 +9,8 @@ published: true
 
 ** 要进行优化，请先确定主要次要瓶颈是什么！ **
 
+【UPDATE】Android Studio 3.2 之后，Android Device Monitor 已经被 Android Studio 内置的功能取代。文中提到的一些工具，做了响应的更新。如果依旧要使用Android Device Monitor，可以在 SDK 目录下 `android-sdk/tools/`找到`monitor`
+
 ## 布局和绘制
 
 布局和绘制如果有问题会直接造成 UI 卡顿，甚至 ANR
@@ -162,7 +164,7 @@ execSQL 执行原始 SQL 语句的效率更高，在封装与效率之间选择�
 
 算法优化，复杂算法用 c 完成使用 jni 调用。
 
-使用 traceview 来分析调用过程，定位卡顿问题出现的位置。
+使用 ~~traceview~~ Android Studio 的 CPU profiler 功能 来分析调用过程，定位卡顿问题出现的位置。
 
 在主线程上的耗时操作过多会导致 ANR。碰到 ANR 时，系统会在 `/data/anr`目录下创建一个 `traces.txt` 文件。取出这个文件`adb pull /data/anr/traces.txt`，通过分析这个文件来定位 ANR 发生的地方。
 
@@ -180,5 +182,4 @@ execSQL 执行原始 SQL 语句的效率更高，在封装与效率之间选择�
 <https://developer.android.google.cn/studio/profile/systrace.html>
 
 <https://developer.android.google.cn/reference/android/view/FrameMetrics.html>
-
 
