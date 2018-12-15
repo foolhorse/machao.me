@@ -60,7 +60,7 @@ protected int getSuggestedMinimumWidth () {
 ```
 getDefaultSize ，功能是根据 getSuggestedMinimumWidth 得到的「内容」尺寸，再根据上层 View 对当前 View 的限制 measureSpec，得到最终尺寸。
 
-计算方式是：当前 View 的 MeasureSpec 的 mode 是 UNSPECIFIED 时，使用「内容」尺寸，如果是 AT_MOST 或者 EXACTLY，使用 MeasureSpec 的尺寸（这里因为没有业务逻辑的 View，不区分 AT_MOST 或者 EXACTLY，所以布局中的 View ，设置 wrap_content 并不起作用）。
+计算方式是：当前 View 的 MeasureSpec 的 mode 是 UNSPECIFIED 时，使用「内容」尺寸，如果是 `AT_MOST` 或者 `EXACTLY`，使用 MeasureSpec 的尺寸（这里因为没有业务逻辑的 View，不区分 `AT_MOST` 或者 `EXACTLY`，所以布局中的 View ，设置 `wrap_content` 并不起作用）。
 ```
 public static int getDefaultSize (int size, int measureSpec) {
     int result = size;
@@ -113,7 +113,7 @@ MeasureSpec 一共有三种 mode
 
 - EXACTLY 当前 View 应直接使用上层 View 给定的限制尺寸
 - AT_MOST 当前 View 可以是 上层 View 给定限制尺寸 以内的任意尺寸
-- UPSPECIFIED 上层 View 对当前 View 没有任何限制，当前 View 可以使用任意尺寸
+- UPSPECIFIED 上层 View 对当前 View 没有任何限制，当前 View 可以使用任意尺寸。这种模式一般是 Android 系统内部使用，或者 ListView 和 ScrollView 等滑动控件。
 
 ### LayoutParams
 
@@ -209,16 +209,21 @@ measureChildren 是遍历当前 ViewGroup 所有 child，并调用 measureChild�
 
 与 Measure 过程不同的是，layout 调用时，`layout` 中先 `setFrame` 确定当前 View 的位置，再 `onLayout` 遍历下层 View 并确定位置。
 
+在某些复杂情况下，`PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT`，在 layout 过程中，会再次进行 onMeasure。
+
 ### `layout`
 
 layout 确定 View 自身的位置。
 
-View 中的 `layout()` 的参数是上一步测量后保存在上层 View 的 **当前 View 的尺寸**对应的位置，方法主要功能是：
+View 中的 `layout()` 的参数 l, t, r, b 分别表示当前 View 相对于上层 View 的左、上、右、下的坐标。这个坐标，通常是在上一步测量当前 View 的尺寸时，上层 View 通常也能得到，保存起来，以便这里使用。
+
+`layout()` 方法主要功能是：
+
 先调用 `setFrame()` 设置当前 View 位置，
 
-`setFrame()` 返回一个 boolean，代表位置是否变化，如果有变化，则调用`onLayout()` ，此时如果有 LayoutChangeListener，依次调用其 onLayoutChange 方法。
+View 中的 `setFrame()` 主要功能是：将新旧位置进行对比，只要不完全相同，那么保存新的位置，保存局部渲染可能使用的位置信息。 changed 变量设置为 true，调用 `onSizeChanged()` 方法。同时如果 View 处于可见状态，那么调用 invalidate 来重新绘制，最后返回 changed 的值。
 
-View 中的 `setFrame()` 主要功能是：将新旧位置进行对比，只要不完全相同，那么 changed 变量设置为 true，保存新的位置，保存局部渲染可能使用的位置信息。调用 `onSizeChanged()` 方法。同时如果 View 处于可见状态，那么调用 invalidate 来重新绘制，最后返回 changed 的值。
+`setFrame()` 返回一个 boolean，代表位置是否变化，如果有变化，则调用`onLayout()` ，此时如果有 LayoutChangeListener，依次调用其 onLayoutChange 方法。
 
 ViewGroup 中的 `layout()` 主要功能是：处理 ViewGroup 增加和删除下层 View 的 LayoutTransition 动画效果，如果未添加动画，或者动画此刻并未运行，那么调用 `super.layout(l, t, r, b)`，也就是 View 的 layout，否则等待动画完成时后调用 `requestLayout()`。
 
@@ -231,16 +236,20 @@ ViewGroup 中的 `layout()` 是 final 的，不能被覆写。
 
 onLayout 调度下层 View 确定位置。
 
+onLayout 的参数跟 layout 的参数一样。 l, t, r, b 分别表示 当前 View 相对于上层 View 的左、上、右、下的坐标。
+
 View 不会再有下层 View，所以 View 的 onLayout 是空实现，ViewGroup 中的  onLayout 是抽象方法。所以 onLayout 肯定是 有具体的功能的 ViewGroup 子类实现。通常需要做这些事：
 
-根据这个 ViewGroup 子类的摆放逻辑，onMeasure 过程中得到的下层 View 的相关尺寸，LayoutParams 的 margin，得出每个下层 View 应处的左上右下位置（可能已经在 onMeasure 时已经一起测量出来，并且保存在某个变量中），最终调用每个下层 View 的 `layout()`，形成递归。
+根据这个 ViewGroup 子类的摆放逻辑，当前 ViewGroup 剩余空间，onMeasure 过程中得到的下层 View 的相关尺寸，LayoutParams 的 margin，gravity 等，计算出每个下层 View 应处的左上右下位置（可能已经在 onMeasure 时已经一起测量出来，并且保存在某个变量中），最终调用每个下层 View 的 `layout()`，形成递归。
 
 
 ## draw(canvas)
 
 draw 方法主要功能是：按顺序调用当前 View 各个「景深」层面的绘制。
 
-View 中的`draw` 方法不是 final 的，可以被覆写。ViewGroup 没有`draw()`实现。
+View 中的`draw()` 方法不是 final 的，可以被覆写。
+
+ViewGroup 没有`draw()`实现。它使用的是父类 View 的 draw 。
 
 View 中的 `draw()` 的过程，源码注释已经很清楚了：
 
@@ -281,9 +290,9 @@ ViewGroup 的 `draw()` 默认不会调用 `onDraw()` 方法。因为正常来说
 
 ### dispatchDraw
 
-View 的 `dispatchDraw()` 方法是一个空方法
+View 的 `dispatchDraw()` 方法是一个空实现
 
-ViewGroup 的 `dispatchDraw()` 主要功能就是遍历下层 View，计算下层 View 的 cavas 剪切区（剪切区的大小正是由 layout 过程决定的，位置取决于滚动值以及当前的动画等），并调用它们的 `draw(canvas)` 方法。
+ViewGroup 的 `dispatchDraw()` 主要功能就是遍历下层 View，计算下层 View 的 canvas 剪切区（剪切区的大小正是由 layout 过程决定的，位置取决于滚动值以及当前的动画等），并调用它们的 `draw(canvas)` 方法。
 
 这个实现基本能满足大部分需求，如果需要自定义下层 View 的绘制，则需要覆写这个方法。通常会在这个自定义的方法中，根据自定义的逻辑，在合适的位置调用默认过程 `super.dispatchDraw(canvas);` ，省时省力。
 
@@ -295,4 +304,3 @@ ViewGroup 的 `dispatchDraw()` 主要功能就是遍历下层 View，计算下�
 `invadite()` 必须在主线程中调用。
 
 `postInvalidate()` 内部是由 Handler 的消息机制实现的，所以在任何线程都可以调用，但实时性没有 invadite() 强。所以保险起见，一般是使用 postInvalidate() 来刷新界面。
-
