@@ -297,10 +297,52 @@ ViewGroup 的 `dispatchDraw()` 主要功能就是遍历下层 View，计算下�
 这个实现基本能满足大部分需求，如果需要自定义下层 View 的绘制，则需要覆写这个方法。通常会在这个自定义的方法中，根据自定义的逻辑，在合适的位置调用默认过程 `super.dispatchDraw(canvas);` ，省时省力。
 
 
-## `invalidate()`
+## requestLayout
 
-`invalidate()` 重绘这个 View，需要注意的是在开启了硬件加速时，可能会跳过 `onDraw()`
+requestLayout 意味着视图的大小已经改变，整个 View 树将会重新测量，重新布局，可能会重新绘制。
+
+在 requestLayout 方法中，首先先判断当前 View 树是否正在布局流程，接着为当前 View 设置标记位，该标记位的作用就是标记了当前的 View 是需要进行重新布局的，接着调用`mParent.requestLayout` 方法，向上层 ViewGroup 请求 layout，即调用上层 ViewGroup 的requestLayout 方法，为上层 ViewGroup 添加 `PFLAG_FORCE_LAYOUT` 标记位，而上层 ViewGroup 又会调用它的上层 ViewGroup 的 requestLayout 方法，形成 requestLayout 事件层层向上传递，直到最上层的 DecorView，而 DecorView 又会传递给 ViewRootImpl，也即是当前 View 的 requestLayout 事件，最终会被 ViewRootImpl 接收并处理。
+
+在 ViewRootImpl 中，重写了requestLayout 方法，我们看看这个方法，`ViewRootImpl#requestLayout`
+```
+@Override
+public void requestLayout() {
+    if (!mHandlingLayoutInLayoutRequest) {
+        checkThread();
+        mLayoutRequested = true;
+        scheduleTraversals();
+    }
+}
+```
+在这里，调用了scheduleTraversals 方法，这个方法是一个异步方法，最终会调用到`ViewRootImpl#performTraversals`方法，在这里会调用 measure、layout、draw 这三大流程。
+
+在 measure 时，最开始就会判断一下 `PFLAG_FORCE_LAYOUT` 标记位，如果有这个标记，那么就会进行测量流程，调用 onMeasure，最后为标记位设置为`PFLAG_LAYOUT_REQUIRED`，这个标记位的作用就是在 layout 流程中，如果当前 View 设置了该标记位，则会进行布局流程。
+
+
+有很多控件比如 TextView，做了一些会导致尺寸修改的操作时，例如 `setPadding()` ， `setTypeface()` ， `setCompoundDrawables()`等。在调用 `requestLayout()` 之后，会再调用 `invalidate()`
+
+因为 requestLayout 本身不会导致绘制过程，只是有些控件内部已经调用了 invalidate 来响应 layout 更改。
+
+因此，为了确保重新布局会导致重画，那么你应该在 requestLayout 配一个 invalidate。
+
+
+## invalidate 
+
+invalidate 请求把 View 重新 draw 一下。 重绘不会同步发生。 相反，它会将当前 View 区域标记为无效（dirty），以便在下一个渲染周期中重绘。
+
+`invalidate()` 重绘这个 View，需要注意的是在开启了硬件加速时，绘制流程会与正常流程有不同，可能会跳过 `onDraw()` 或者某些流程。
+
+下面分析调用流程：
+
+invalidate 最终都会调用 invalidateInternal 方法，在这个方法内部，进行了一系列的判断，判断当前 View 是否需要重绘，接着为当前 View 设置标记位，并调用上层 ViewGroup 的 invalidateChild 方法，把需要重绘的区域传递给上层 ViewGroup。
+
+在 `ViewGroup#invalidateChild` 中，先设置当前视图的标记位，接着有一个`do…while…`循环，该循环的作用是不断向上递归上层 ViewGroup。当父容器不是 ViewRootImpl 的时候，调用的是 ViewGroup 的 invalidateChildInParent 方法，这个方法会返回当前 View 的上层 ViewGroup。
+
+在 `ViewGroup#invalidateChildInParent` 中，调用 offset 方法，把之前传来的下层 View 的 dirty 区域的坐标转化为当前 ViewGroup 中的坐标，接着调用 union 方法，把下层 View 的  dirty 区域与当前 ViewGroup 区域求并集，也就是 dirty 区域加上了当前 ViewGroup 的。最后返回当前 ViewGroup 的上层 ViewGroup，以便进行下一次循环。
+
+在上面 `ViewGroup#invalidateChild` 所说的`do…while…`循环中，由于不断调用上层 ViewGroup 的方法，到最后会调用到 ViewRootImpl 的 invalidateChildInParent 方法，在这里，也进行了 offset 和 union 然后把dirty区域的信息保存在 mDirty 中，最后会调用 scheduleTraversals 方法，在这里会对整个 View 树调用 measure、layout、draw 这三大流程。由于没有添加 measure 和 layout 的标记位，因此 measure、layout 流程不会执行，而是直接从 draw 流程开始。
+
 
 `invadite()` 必须在主线程中调用。
 
-`postInvalidate()` 内部是由 Handler 的消息机制实现的，所以在任何线程都可以调用，但实时性没有 invadite() 强。所以保险起见，一般是使用 postInvalidate() 来刷新界面。
+`postInvalidate()` 只有视图被添加到窗口的时候才会继续执行，也就是 attachInfo 不为 null 的时候。内部是由 Handler 的消息机制实现的，所以在任何线程都可以调用，但实时性没有 `invadite()` 强。一般保险起见，会使用 `postInvalidate()` 来刷新界面。
