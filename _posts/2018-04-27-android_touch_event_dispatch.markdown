@@ -31,6 +31,7 @@ ViewGroup 的 onInterceptTouchEvent 直接返回了 false，即默认是不拦�
  
 这段伪代码就把传递过程解释了大部分，可以多看几眼。
 ```
+// 1. ACTION_DOWN 时，判断是否有 target
 if (action == MotionEvent.ACTION_DOWN) {
     // disallowIntercept 为 true （下层 View 不允许在这里 Intercept）
     //  或者 onInterceptTouchEvent 返回 false 时。（此处调用了onInterceptTouchEvent）
@@ -47,45 +48,48 @@ if (action == MotionEvent.ACTION_DOWN) {
         }
     }
 }
-// 如果 mMotionTarget 为空，这里有两种情况，一种是中断，一种是没找到合适的下层 View
+// 2. 如果 mMotionTarget 为空，这里有两种情况，一种是中断，一种是没找到合适的下层 View
 // 那么调用  super.dispatchTouchEvent(ev)，也就是 View 的 dispatchTouchEvent(ev)，也就是由 ViewGroup 自身来处理事件。
 final View target = mMotionTarget;
 if (target == null) {
     return super.dispatchTouchEvent(ev);
 } 
-// 如果 onInterceptTouchEvent 返回了 true
+// 3. 如果 onInterceptTouchEvent 返回了 true
 if (!disallowIntercept && onInterceptTouchEvent(ev)) {
            // 那么给 target 发去一个 CANCEL 的事件。这里调用 target.dispatchTouchEvent(ev) CANCEL 事件。
             ev.setAction(MotionEvent.ACTION_CANCEL);
             if (!target.dispatchTouchEvent(ev)) {
-             
+            
             }
-            // clear the target
+            // 当前事件已经改成 CANCEL 发给 target。这里把 target 设置为 null，这个同一串事件的下一个事件开始，在运行到 「2」 时，调用 `return super.dispatchTouchEvent(ev);`
             mMotionTarget = null;
-            // 不需要再 `super.dispatchTouchEvent(ev)`，因为接下来的事件肯定是当前 ViewGroup 消费，所以这里返回 true，让上一层的 ViewGroup 会负责后续事件分发过来。
+            // 这里返回 true。依旧由这个 ViewGroup 处理事件。
             return true;
 }
+// 4. 在一串事件的结束时，重置 target
 if (isUpOrCancel) {
     mMotionTarget = null;
 }
-// 将事件转换成 目标 View 的坐标后 ，调用 target.dispatchTouchEvent(ev); 并返回
+// 5. 将事件转换成 目标 View 的坐标后 ，调用 target.dispatchTouchEvent(ev); 并返回
 return target.dispatchTouchEvent(ev);
 ```
 
-首先在 ACTION_DOWN 事件 时，先 onInterceptTouchEvent ，不中断的话，迭代下层 view 寻找 target 。target 的条件是 点击区域在这个 child view 的范围内，同时这个 child 的 dispatchTouchEvent(ev) 返回 true。注意这里形成了上下层 view 的递归，如果满足条件，则调用这个 View 的 dispatchTouchEvent，如果 dispatchTouchEvent 返回 true，说明这个下层 View 想要处理这个时间，则设置这个 child 为 target，并且当前 ViewGroup 的 dispatchTouchEvent 返回 true 。如果迭代完所有下层 View 之后还没找到 target，则调用 `super.dispatchTouchEvent(ev);` 也就是 ViewGroup 自身处理事件。如果这里也返回 false ，直到传递到最上层 ViewGroup 也仍然没有被消费的话，最后会回到 Activity 的onTouchEvent。
+1. 首先在 `ACTION_DOWN` 事件时，先 `onInterceptTouchEvent` ，不中断的话，迭代下层 view 寻找 target 。target 的条件是 点击区域在这个 child view 的范围内，同时这个 child 的 dispatchTouchEvent(ev) 返回 true。说明这个下层 View 想要消费这一串事件，则设置这个 child 为 target，注意这里形成了上下层 view 的递归，并且当前 ViewGroup 的 dispatchTouchEvent 返回 true 。事件就经过一层一层的 ViewGroup 返回 true，到达此处。
 
-接下来会在这里收到 `ACTION_DOWN` 之后的 `ACTION_MOVE` ，这里有一个在处理 `ACTION_DOWN` 事件时是否找到了 target 的判断，如果没有，则直接调用自己的 `return super.dispatchTouchEvent(ev);` 也就是调用了 View 的 `dispatchTouchEvent`，并且 return 。
+2. 如果没找到 target，则调用 `super.dispatchTouchEvent(ev);` 也就是 ViewGroup 自身处理事件。这里有两种情况，一种是此时是 ACTION_DOWN 事件，没找到 target ，一种是此时不是 ACTION_DOWN 事件，之前找到了 target，但是此时是后续的比如 ACTION_MOVE 事件时，之前的 ACTION_MOVE 事件时，中断了。
+如果这里也返回 false ，只有此时是 ACTION_DOWN 事件，也就是确定 target 时，会起作用。
 
-如果有 target ，则先 onInterceptTouchEvent ，不中断的话就 `return target.dispatchTouchEvent(ev);`，中断的话则 ` ev.setAction(MotionEvent.ACTION_CANCEL); ` ，把这个取消事件给 target` target.dispatchTouchEvent(ev))`，当前 ViewGroup 的 dispatchTouchEvent 返回 true 。
+3. 到这里时，肯定有 target ，则先判断 onInterceptTouchEvent ，中断的话则  把当前时间修改成 `ACTION_CANCEL`事件，把这个取消事件给 target，然后把 target 设置为 null，但是让当前 ViewGroup 的 dispatchTouchEvent 依然返回 true 。这样一来，这一串事件的后续事件再进入当前 dispatchTouchEvent 方法后，在第 2 步，由于 target 是 null，会调用自身的`super.dispatchTouchEvent(ev);`
 
-根据上面的流程可以看出，在处理完 ACTION_DOWN 事件时，有一个上下层的递归，这个递归实际上就是事件在 View 层级中由上而下的传递，在这个过程中设置 target。当确定了 target 是否存在后，后面的  ACTION_MOVE 等事件在 View 层级中的流向就时确定的了。
+4. 到这里时，有 target ，不中断。如果是一个一串事件的结束事件，那么把 target 设置为 null。重置 target。（等待下一次 `ACTION_DOWN`）
 
+5. 到这里时，有 target ，不中断，不是一串事件的结束，正常向 target 传递事件并返回。`return target.dispatchTouchEvent(ev);`
 
 ## View 中的 dispatchTouchEvent
 
 这里决定事件在 View 内部由哪个方法处理。
 
-- dispatchTouchEvent(MotionEvent event)
+- `dispatchTouchEvent(MotionEvent event)`
 如果有 OnTouchListener ，同时当前 View 处于可用状态`(mViewFlags & ENABLED_MASK) == ENABLED`的话，就执行 OnTouchListener 的 onTouch，如果`mOnTouchListener.onTouch(this, event)==true` ，View 的 dispatchTouchEvent 在这里直接返回，返回值是 true。
 没有 OnTouchListener 的话就执行 `onTouchEvent(MotionEvent event)`
 
