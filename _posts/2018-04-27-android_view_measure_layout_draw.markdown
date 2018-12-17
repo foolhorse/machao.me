@@ -5,8 +5,6 @@ date: 2018-04-27 20:02:00 +0800
 tags: develop android view measure layout draw
 published: true
 ---
-# Android View 测量 布局 绘制
-
 ## 开始
 
 每个 Activity 会创建一个 PhoneWindow 对象，是 Activity 和整个 View 系统交互的接口。
@@ -330,7 +328,7 @@ public void requestLayout() {
 
 invalidate 请求把 View 重新 draw 一下。 重绘不会同步发生。 相反，它会将当前 View 区域标记为无效（dirty），以便在下一个渲染周期中重绘。
 
-`invalidate()` 重绘这个 View，需要注意的是在开启了硬件加速时，绘制流程会与正常流程有不同，可能会跳过 `onDraw()` 或者某些流程。
+`invalidate()` 重绘这个 View，需要注意的是在开启了硬件加速时（API 14之后包括 14，硬件加速默认是开启的），绘制流程会与正常流程有不同，可能会跳过 某些流程。
 
 下面分析调用流程：
 
