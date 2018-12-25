@@ -74,9 +74,23 @@ published: true
 当要显示的区域很小，没必要将图片原尺寸加载出来，而只需要加载一个缩小过的图片，这时候可以设置一定的采样率，则可以大大减少占用的内存。
 ```
 private ImageView iv;    
-BitmapFactory.Options options = newBitmapFactory.Options();    
+BitmapFactory.Options options = new BitmapFactory.Options();    
 options.inSampleSize = 2; //图片宽高都为原来的二分之一，即图片为原来的四分之一    
 Bitmap bitmap =BitmapFactory.decodeStream(cr.openInputStream(uri), null, options); iv.setImageBitmap(bitmap);   
+```
+
+## 设置合适的像素格式
+
+`Bitmap.Config` 用来描述图片的像素是怎么被存储的：
+ARGB_8888: 每个像素4字节. 共32位，默认设置。
+RGB_565:共16位，2字节，只存储RGB值。
+Alpha_8: 只保存透明度，共8位，1字节。
+ARGB_4444: 共16位，2字节。
+
+```
+BitmapFactory.Options options = new BitmapFactory.Options();
+options.inPreferredConfig = Bitmap.Config.RGB_565;
+Bitmap bitmap = BitmapFactory.decodeFile("/foo.png",options);
 ```
 
 #### 使用用软引用（SoftRefrence）
@@ -182,4 +196,3 @@ execSQL 执行原始 SQL 语句的效率更高，在封装与效率之间选择�
 <https://developer.android.google.cn/studio/profile/systrace.html>
 
 <https://developer.android.google.cn/reference/android/view/FrameMetrics.html>
-
