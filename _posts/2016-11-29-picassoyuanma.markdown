@@ -77,7 +77,7 @@ hunt() 拿到 bitmap 之后，通过`dispatcher.dispatchComplete(this);`或者`d
 ## PicassoExecutorService.java
 
 获取图片任务的线程池，根据网络状态设置线程数量。将 bitmapHunter 包装成 FutureTask 方便控制优先级。
-默认 3 个核心线程，3 个非核心线程。线程池线程总数大于核心线程数时，终止多余的空闲线程的时间是0，也就是超过线程数就直接执行超时策略。任务带优先级。
+默认 3 个核心线程，最大线程数也是 3 个。线程池线程总数大于 最大线程数时，终止多余的空闲线程的时间是0，也就是超过线程数就直接执行超时策略。使用的 PriorityBlockingQueue ， 也就是任务带优先级。
 
 核心线程数会根据当前网络状态（WIFI，4G，3G，2G）来修改。
 
