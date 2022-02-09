@@ -8,5 +8,5 @@ permalink: /about/
 我认真或者不认真的写写，你随便或者不随便的看看。
 
 你也可以在这里找到我: 
-{% include icon-twitter.html username="_charliema" %} /
-[_charliema](https://twitter.com/machaotuite)
+{% include icon-twitter.html username=site.twitter_username %} /
+
