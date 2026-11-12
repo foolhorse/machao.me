@@ -48,7 +48,9 @@
       }
     });
     container.addEventListener('focusout', function (event) {
-      if (!container.contains(event.relatedTarget)) close();
+      // Clicking a label can temporarily move focus to the document body.
+      // Let that click reach its radio; outside clicks are handled above.
+      if (event.relatedTarget && !container.contains(event.relatedTarget)) close();
     });
     container.hidden = false;
   }
