@@ -1,4 +1,4 @@
-# 笨马 / machao.me
+# machao.me
 
 个人静态博客，使用 GitHub Pages 内置的 Jekyll 构建。
 
