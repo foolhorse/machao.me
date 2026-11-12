@@ -19,6 +19,8 @@
 .post-title { margin-bottom: 14px; }
 .post-header p { margin: 0; }
 .post-content a { text-decoration: underline; text-underline-offset: 4px; }
+.social-link, .post-content .social-link { display: inline-flex; align-items: baseline; gap: 4px; text-decoration: none; }
+.social-link:hover, .post-content .social-link:hover { color: var(--muted); text-decoration: none; }
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 { margin: 32px 0 14px; }
 .post-content > :last-child { margin-bottom: 0; }
 .site-footer { padding-bottom: 28px; color: var(--muted); font-size: 13px; line-height: 1.6; }
