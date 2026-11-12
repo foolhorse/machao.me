@@ -6,7 +6,6 @@ tags: develop java android
 published: true
 ---
 
-# Picasso源码
 
 ## Picasso.java
 

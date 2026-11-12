@@ -5,7 +5,6 @@ date: 2018-04-26 12:07:00 +0800
 tags: develop android lib
 published: true
 ---
-# 「已发布」Android 库的打包和发布
 
 一个库项目的构建过程与一般项目是一样的。
 

@@ -5,7 +5,6 @@ date: 2018-04-27 20:16:00 +0800
 tags: develop android touch event
 published: true
 ---
-# Android TouchEvent 触摸事件传递
 
 ## Activity
 

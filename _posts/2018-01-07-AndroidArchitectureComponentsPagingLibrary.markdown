@@ -5,7 +5,6 @@ date: 2018-01-07 23:57:00 +0800
 tags: develop android
 published: true
 ---
-# Android Architecture Components Paging Library
 
 ## DataSource
 

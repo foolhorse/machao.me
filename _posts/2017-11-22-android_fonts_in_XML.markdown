@@ -5,7 +5,6 @@ date: 2017-11-22 13:13:00 +0800
 tags: develop android
 published: true
 ---
-# Android 在 XML 布局中使用自定义字体
 
 在 Android 8.0 (API level 26) 中可以在 xml 中就像其他资源一样使用自定义字体。
 使用 Support Library 26 可以兼容到 API version 14 以上。

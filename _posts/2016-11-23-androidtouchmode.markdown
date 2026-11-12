@@ -5,7 +5,6 @@ date:   2016-11-23 00:40:00 +0800
 tags: develop android
 published: true
 ---
-# Android的TouchMode
 
 ## 触摸模式
 

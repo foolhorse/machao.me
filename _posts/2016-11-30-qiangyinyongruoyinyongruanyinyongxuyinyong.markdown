@@ -6,7 +6,6 @@ tags: develop java
 published: true
 ---
 
-# 强引用 弱引用 软引用 虚引用
 
 ## Strong Reference
 

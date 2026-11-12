@@ -5,7 +5,6 @@ date: 2017-11-14 23:52:00 +0800
 tags: develop android
 published: true
 ---
-# Android Architecture Components LiveData
 
 LiveData 是一个可监听的数据容器，可以在数据变化的时候通知观察者。LiveData 可以感知生命周期，因此观察者可以指定某一个 LifeCycle 给 LiveData。
 

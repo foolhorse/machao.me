@@ -5,7 +5,6 @@ date: 2017-11-14 23:51:00 +0800
 tags: develop android
 published: true
 ---
-# Android Architecture Components ViewModel
 
 用于持有和管理数据，通常持有 LiveData，处理数据持久化，存取等具体逻辑， 相当于 MVP 中的 Presenter。
 

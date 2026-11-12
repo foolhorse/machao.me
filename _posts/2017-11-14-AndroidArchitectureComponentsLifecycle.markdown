@@ -5,7 +5,6 @@ date: 2017-11-14 23:50:00 +0800
 tags: develop android
 published: true
 ---
-# Android Architecture Components Lifecycle
 
 Lifecycle 是一个持有组件（比如 activity 或者 fragment）生命周期状态信息的类，并且允许其它对象观察这个状态。
 

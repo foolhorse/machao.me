@@ -5,7 +5,6 @@ date: 2018-04-26 00:41:00 +0800
 tags: develop oo
 published: true
 ---
-# 设计模式 行为篇
 
 ## 策略模式 Strategy Pattern
 

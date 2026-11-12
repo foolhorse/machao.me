@@ -2,13 +2,18 @@
 layout: default
 ---
 {%- include language.html -%}
-<article lang="{{ content_lang | escape }}" class="post" itemscope itemtype="http://schema.org/BlogPosting">
+{% assign post_author = page.author | default: site.author %}
+<article lang="{{ content_lang | escape }}" class="post" itemscope itemtype="https://schema.org/BlogPosting">
   <meta itemprop="inLanguage" content="{{ content_lang | escape }}">
   <a lang="{{ ui_lang }}" data-i18n="all_posts" class="post-back" href="{{ '/' | relative_url }}">{{ ui.all_posts }}</a>
 
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
-    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>{% if page.author %} · <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author | escape }}</span></span>{% endif %}</p>
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
+      {% if post_author %} · <span itemprop="author" itemscope itemtype="https://schema.org/Person"><a itemprop="url" href="{{ '/about/' | relative_url }}"><span itemprop="name">{{ post_author | escape }}</span></a></span>{% endif %}
+      {% if page.last_modified_at %}<br>{% if ui_lang == 'en' %}Updated{% else %}更新于{% endif %} <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date: "%Y-%m-%d" }}</time>{% endif %}
+    </p>
   </header>
 
   <div class="post-content" itemprop="articleBody">

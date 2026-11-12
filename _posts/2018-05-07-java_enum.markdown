@@ -5,7 +5,6 @@ date: 2018-05-07 23:40:00 +0800
 tags: develop java
 published: true
 ---
-# Java 中的 Enum 枚举
 
 一个典型的使用：
 ```

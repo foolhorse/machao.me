@@ -6,7 +6,6 @@ tags: develop android
 published: true
 ---
 
-# Android 访问记录 UsageStatsManager
 
 5.0 之前，可以使用 `ActivityManager` 来获取应用相关信息
 

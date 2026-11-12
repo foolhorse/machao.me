@@ -5,7 +5,6 @@ date: 2018-05-09 23:52:00 +0800
 tags: develop android
 published: true
 ---
-# Android Activity Task launch mode
 
 基本上，task / task stack / back stack / 任务栈 / 回退栈 说的是一回事。
 

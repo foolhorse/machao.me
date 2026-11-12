@@ -1,10 +1,14 @@
 title: machao.me
-description: 当当当
+description: 记录软件开发中的实践与思考，分享 Android、Java、个人工具和生活笔记。
+author: machao
 url: "https://machao.me"
 x_username: FloatMaze
 
 # Preserve historical article URLs, including posts dated near midnight (+0800).
 timezone: UTC
+
+plugins:
+  - jekyll-sitemap
 
 exclude:
   - AGENTS.md
