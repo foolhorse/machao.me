@@ -1,7 +1,7 @@
 title: machao.me
 description: 当当当
 url: "https://machao.me"
-twitter_username: _charliema
+x_username: _charliema
 
 # Preserve historical article URLs, including posts dated near midnight (+0800).
 timezone: UTC
