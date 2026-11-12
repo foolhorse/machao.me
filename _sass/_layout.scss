@@ -50,13 +50,16 @@
         border-radius:0px;
         text-align: right;
 
-        .menu-icon {
+        &.is-enhanced .menu-icon {
             display: block;
             float: right;
-            width: 36px;
-            height: 26px;
+            width: 44px;
+            height: 44px;
             line-height: 0;
-            padding-top: 10px;
+            padding: 10px 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
             text-align: center;
 
             > svg {
@@ -71,10 +74,13 @@
 
         .trigger {
             clear: both;
+        }
+
+        &.is-enhanced .trigger {
             display: none;
         }
 
-        &:hover .trigger {
+        &.is-open .trigger {
             display: block;
             padding-bottom: 5px;
         }
