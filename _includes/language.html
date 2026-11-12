@@ -1,0 +1,7 @@
+{%- assign content_lang = page.lang | default: 'zh' -%}
+{%- assign language_prefix = content_lang | slice: 0, 2 -%}
+{%- assign ui_lang = 'zh' -%}
+{%- if language_prefix == 'en' -%}
+  {%- assign ui_lang = 'en' -%}
+{%- endif -%}
+{%- assign ui = site.data.i18n[ui_lang] -%}

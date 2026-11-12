@@ -3,10 +3,10 @@
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
 .site-title { font-size: 20px; font-weight: 600; letter-spacing: -.5px; }
 .site-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; font-size: 14px; color: var(--muted); }
-.site-nav a, .theme-toggle { padding: 8px 0; }
+.site-nav a, .theme-toggle, .language-toggle { padding: 8px 0; }
 .site-nav [aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 7px; }
-.theme-toggle { background: none; border: 0; border-left: 1px solid var(--line); padding-left: 20px; font-size: 13px; white-space: nowrap; }
-.theme-toggle:hover { color: var(--ink); }
+.theme-toggle, .language-toggle { background: none; border: 0; border-left: 1px solid var(--line); padding-left: 20px; font-size: 13px; white-space: nowrap; }
+.theme-toggle:hover, .language-toggle:hover { color: var(--ink); }
 .page-content { padding: 52px 0 44px; min-height: 570px; }
 .home-intro h1 { margin-bottom: 14px; }
 .home-intro p { margin: 0; font-size: 15px; color: var(--muted); line-height: 1.8; }
@@ -29,7 +29,7 @@
     .site-header { padding-top: 24px; }
     .header-inner { flex-wrap: wrap; gap: 12px; }
     .site-nav { gap: 14px; }
-    .theme-toggle { padding-left: 14px; }
+    .theme-toggle, .language-toggle { padding-left: 14px; }
     .page-content { padding-top: 38px; }
     h1 { font-size: 28px; }
     .post-list { margin-top: 30px; }

@@ -1,0 +1,26 @@
+zh:
+  posts: 文章
+  about: 关于
+  navigation: 主导航
+  light: 浅色
+  dark: 深色
+  switch_light: 切换为浅色模式
+  switch_dark: 切换为深色模式
+  switch_language: Switch interface to English
+  language: EN
+  all_posts: ← 所有文章
+  home_title: 记录，思考。
+  home_description: 关于技术、生活，以及一些尚未想明白的事。
+en:
+  posts: Posts
+  about: About
+  navigation: Main navigation
+  light: Light
+  dark: Dark
+  switch_light: Switch to light mode
+  switch_dark: Switch to dark mode
+  switch_language: 将界面切换为中文
+  language: 中文
+  all_posts: ← All posts
+  home_title: Notes and thoughts.
+  home_description: On technology, life, and things I'm still figuring out.

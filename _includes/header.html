@@ -2,14 +2,15 @@
   <div class="wrapper">
     <div class="header-inner">
       <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
-      <nav class="site-nav" aria-label="主导航">
-        <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>文章</a>
+      <nav class="site-nav" lang="{{ ui_lang }}" aria-label="{{ ui.navigation | escape }}" data-i18n-aria="navigation">
+        <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %} data-i18n="posts">{{ ui.posts }}</a>
         {% for my_page in site.pages %}
           {% if my_page.title and my_page.nav_exclude != true %}
-        <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}>{% if my_page.url == '/about/' %}关于{% else %}{{ my_page.title | escape }}{% endif %}</a>
+        <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}{% if my_page.url == "/about/" %} data-i18n="about"{% else %} lang="{{ my_page.lang | default: 'zh' | escape }}"{% endif %}>{% if my_page.url == '/about/' %}{{ ui.about }}{% else %}{{ my_page.title | escape }}{% endif %}</a>
           {% endif %}
         {% endfor %}
-        <button class="theme-toggle" type="button" hidden>暗色</button>
+        <button class="theme-toggle" type="button" hidden>{{ ui.dark }}</button>
+        <button class="language-toggle" type="button" lang="{% if ui_lang == 'en' %}zh{% else %}en{% endif %}" aria-label="{{ ui.switch_language | escape }}" hidden>{{ ui.language }}</button>
       </nav>
     </div>
   </div>

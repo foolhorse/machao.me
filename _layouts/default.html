@@ -1,5 +1,6 @@
+{%- include language.html -%}
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="{{ content_lang | escape }}" data-ui-lang="{{ ui_lang }}">
   {% include head.html %}
   <body>
     {% include header.html %}
@@ -9,6 +10,7 @@
       </div>
     </main>
     {% include footer.html %}
+    <script id="i18n-data" type="application/json">{{ site.data.i18n | jsonify }}</script>
     <script src="{{ "/js/main.js" | relative_url }}" defer></script>
   </body>
 
