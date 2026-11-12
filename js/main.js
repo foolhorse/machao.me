@@ -1,27 +1,25 @@
 (function () {
   'use strict';
 
-  var nav = document.querySelector('.site-nav');
-  if (!nav) return;
-  var button = nav.querySelector('.menu-icon');
-  var mobile = window.matchMedia('(max-width: 600px)');
+  var root = document.documentElement;
+  var button = document.querySelector('.theme-toggle');
+  var system = window.matchMedia('(prefers-color-scheme: dark)');
+  if (!button) return;
 
-  function setOpen(open) {
-    nav.classList.toggle('is-open', open);
-    button.setAttribute('aria-expanded', String(open));
-    button.setAttribute('aria-label', open ? '收起导航' : '展开导航');
+  function update() {
+    var dark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.hasAttribute('data-theme') && system.matches);
+    button.textContent = dark ? '浅色' : '暗色';
+    button.setAttribute('aria-label', dark ? '切换为浅色模式' : '切换为暗色模式');
   }
 
   button.addEventListener('click', function () {
-    setOpen(button.getAttribute('aria-expanded') !== 'true');
+    var theme = button.textContent === '暗色' ? 'dark' : 'light';
+    root.setAttribute('data-theme', theme);
+    try { localStorage.setItem('theme', theme); } catch (error) { /* Storage is optional. */ }
+    update();
   });
-  nav.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && nav.classList.contains('is-open')) {
-      setOpen(false);
-      button.focus();
-    }
-  });
-  mobile.addEventListener('change', function () { setOpen(false); });
+  system.addEventListener('change', update);
+  update();
   button.hidden = false;
-  nav.classList.add('is-enhanced');
 }());

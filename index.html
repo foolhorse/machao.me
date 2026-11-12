@@ -1,37 +1,17 @@
 ---
 layout: default
 ---
-
 <div class="home">
- 
-  <!-- <h1 class="page-heading">Categories</h1>
-  <ul >
-    {% for category in site.categories %}
-    <li><a href="/categories/{\{ category | first }\}/">{{category[0]}}</a></li>
-    {% endfor %}
-  </ul>
-
-  <h1 class="page-heading">Tags</h1>
-  <ul>
-    {% for tag in site.tags %}
-    <li><a >{{tag[0]}}</a></li>
-    {% endfor %}
-  </ul> -->
-  
-
-  <h1 class="page-heading">Posts</h1>
+  <header class="home-intro">
+    <h1>记录，思考。</h1>
+    <p>关于技术、生活，以及一些尚未想明白的事。</p>
+  </header>
   <ul class="post-list">
-      {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
-      </li>
+    {% for post in site.posts %}
+    <li>
+      <time class="post-meta" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+      <h2><a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
+    </li>
     {% endfor %}
   </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
-
 </div>
