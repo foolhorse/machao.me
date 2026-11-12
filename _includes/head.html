@@ -16,6 +16,7 @@
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | escape }}{% else %}{{ site.description | escape }}{% endif %}">
 
   <link rel="stylesheet" href="{{ "/css/main.css" | relative_url }}">
+  <link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | relative_url }}?v=pirate">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | absolute_url }}">
 </head>
