@@ -2,7 +2,7 @@
 layout: post
 title: "Android Activity Task launch mode"
 date: 2018-05-09 23:52:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 

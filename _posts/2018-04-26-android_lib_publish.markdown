@@ -2,7 +2,7 @@
 layout: post
 title: "Android 库的打包和发布"
 date: 2018-04-26 12:07:00 +0800
-tags: develop android lib
+tags: develop Android
 published: true
 ---
 

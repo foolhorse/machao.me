@@ -2,7 +2,7 @@
 layout: post
 title: "Android Architecture Components LiveData"
 date: 2017-11-14 23:52:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 

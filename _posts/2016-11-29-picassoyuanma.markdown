@@ -2,7 +2,7 @@
 layout: post
 title:  "Picasso源码"
 date:   2016-11-29 23:40:00 +0800
-tags: develop java android 
+tags: develop java Android
 published: true
 ---
 

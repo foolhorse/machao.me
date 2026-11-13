@@ -2,7 +2,7 @@
 layout: post
 title: "Android View 测量布局绘制过程"
 date: 2018-04-27 20:02:00 +0800
-tags: develop android view measure layout draw
+tags: develop Android
 published: true
 ---
 ## 开始

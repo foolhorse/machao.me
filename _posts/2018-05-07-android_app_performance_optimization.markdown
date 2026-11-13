@@ -2,7 +2,7 @@
 layout: post
 title: "Android 应用开发性能优化提纲"
 date: 2018-05-07 23:40:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 

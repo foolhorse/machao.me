@@ -2,7 +2,7 @@
 layout: post
 title: "Android TouchEvent 触摸事件传递"
 date: 2018-04-27 20:16:00 +0800
-tags: develop android touch event
+tags: develop Android
 published: true
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "Android触摸模式"
 date:   2016-11-23 00:40:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 

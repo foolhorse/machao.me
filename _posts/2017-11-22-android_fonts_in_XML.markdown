@@ -2,7 +2,7 @@
 layout: post
 title: "Android 在 XML 布局中使用自定义字体"
 date: 2017-11-22 13:13:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 

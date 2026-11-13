@@ -2,7 +2,7 @@
 layout: post
 title: "Android Architecture Components Lifecycle"
 date: 2017-11-14 23:50:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 

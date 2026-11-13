@@ -2,7 +2,7 @@
 layout: post
 title: "Android 内存泄漏"
 date: 2018-05-07 23:40:00 +0800
-tags: develop java android
+tags: develop java Android
 published: true
 ---
 

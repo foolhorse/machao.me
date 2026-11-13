@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式 创建篇"
 date: 2018-04-26 00:41:00 +0800
-tags: develop oo
+tags: develop OO
 published: true
 ---
 

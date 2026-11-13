@@ -2,7 +2,7 @@
 layout: post
 title: "Android Architecture Components Paging Library"
 date: 2018-01-07 23:57:00 +0800
-tags: develop android
+tags: develop Android
 published: true
 ---
 
