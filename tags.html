@@ -1,0 +1,32 @@
+---
+layout: default
+title: 标签
+permalink: /tags/
+---
+{%- include language.html -%}
+{% assign sorted_tags = site.tags | sort %}
+<div class="tags-page">
+  <header class="home-intro">
+    <h1 lang="{{ ui_lang }}" data-i18n="tags">{{ ui.tags }}</h1>
+    <p lang="{{ ui_lang }}" data-i18n="tags_description">{{ ui.tags_description }}</p>
+  </header>
+  <ul class="tag-list">
+    {% for tag in sorted_tags %}
+    <li><a href="#tag-{{ tag[0] | uri_escape | escape }}">{{ tag[0] | escape }} <span class="tag-count">({{ tag[1].size }})</span></a></li>
+    {% endfor %}
+  </ul>
+  {% for tag in sorted_tags %}
+  <section class="tag-section" aria-labelledby="tag-{{ tag[0] | escape }}">
+    <h2 id="tag-{{ tag[0] | escape }}">{{ tag[0] | escape }} <span class="tag-count">({{ tag[1].size }})</span></h2>
+    <ul class="post-list">
+      {% assign tagged_posts = tag[1] | sort: 'date' | reverse %}
+      {% for post in tagged_posts %}
+      <li>
+        <time class="post-meta" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+        <h3><a lang="{{ post.lang | default: 'zh' | escape }}" class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+</div>

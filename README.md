@@ -10,6 +10,8 @@
 - `_config.yml`：站点信息，时区固定为 UTC，以保留历史文章地址。
 - `CNAME`：自定义域名 `machao.me`。
 
+标签页位于 `/tags/`，自动按文章 Front Matter 中的 `tags` 汇总标签、文章数量和文章列表；文章页的标签可直接跳转到对应分组。发布文章时填写 `tags: develop android` 或 YAML 数组即可，无需手工维护标签页。标签区分大小写（例如 `Android` 和 `android` 是两个标签）。
+
 外观采用 680px 单栏阅读区、大标题使用本机衬线字体，正文使用系统无衬线字体，不加载外部字体。浅暗配色在 `_sass/_base.scss` 中，布局在 `_sass/_layout.scss` 中。默认跟随系统外观，导航中的按钮可手动切换，选择保存在当前浏览器；禁用 JavaScript 时仍会通过 CSS 跟随系统外观。
 
 

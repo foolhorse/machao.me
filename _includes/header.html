@@ -6,7 +6,7 @@
         <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %} data-i18n="posts">{{ ui.posts }}</a>
         {% for my_page in site.pages %}
           {% if my_page.title and my_page.nav_exclude != true %}
-        <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}{% if my_page.url == "/about/" %} data-i18n="about"{% else %} lang="{{ my_page.lang | default: 'zh' | escape }}"{% endif %}>{% if my_page.url == '/about/' %}{{ ui.about }}{% else %}{{ my_page.title | escape }}{% endif %}</a>
+        <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}{% if my_page.url == "/about/" %} data-i18n="about"{% elsif my_page.url == "/tags/" %} data-i18n="tags"{% else %} lang="{{ my_page.lang | default: 'zh' | escape }}"{% endif %}>{% if my_page.url == '/about/' %}{{ ui.about }}{% elsif my_page.url == '/tags/' %}{{ ui.tags }}{% else %}{{ my_page.title | escape }}{% endif %}</a>
           {% endif %}
         {% endfor %}
         <div class="theme-picker" hidden>

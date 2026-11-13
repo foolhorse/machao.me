@@ -1,6 +1,8 @@
 zh:
   posts: 文章
   about: 关于
+  tags: 标签
+  tags_description: 按标签浏览文章。
   navigation: 主导航
   light: 浅色
   dark: 深色
@@ -14,6 +16,8 @@ zh:
 en:
   posts: Posts
   about: About
+  tags: Tags
+  tags_description: Browse posts by tag.
   navigation: Main navigation
   light: Light
   dark: Dark
